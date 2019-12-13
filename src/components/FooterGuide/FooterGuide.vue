@@ -67,8 +67,9 @@
       &.on
         color $green
       span
-        margin-top 3px
+        margin-top 5px
         font-size 12px
         i
           font-size 22px
+          
 </style>

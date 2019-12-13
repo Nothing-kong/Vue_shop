@@ -138,6 +138,7 @@
                 font-size 30px
                 vertical-align text-top
             .icon-mobile-number
+              margin-left 5px
               font-size 14px
               color #fff
         .arrow
