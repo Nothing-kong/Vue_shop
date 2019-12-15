@@ -2,6 +2,7 @@ import Vue from 'vue'
 import 'lib-flexible'
 import App from './App.vue'
 import router from './router'
+import store from './vuex/store'
 import Header from './components/Header/Header.vue'
 
 //注册全局组件
@@ -13,4 +14,5 @@ new Vue({
   // template: '<App/>'
   render: h => h(App),
   router, // 所有组件都能看到 $router和$route  <router-link> 和 <router-view/>
+  store,//所有组件都能看到store
 }).$mount('#app')
