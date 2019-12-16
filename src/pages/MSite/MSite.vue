@@ -312,10 +312,14 @@
   import Swiper from 'swiper'
   import 'swiper/css/swiper.css'
   import {mapState} from 'vuex'
+
+
   export default {
+
     computed: {
       ...mapState(['address']),
     },
+    
     mounted () {
       // swiper对象必须要在列表数据显示之后创建
       new Swiper ('.swiper-container', {
