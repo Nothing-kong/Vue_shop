@@ -11,108 +11,19 @@
     </Header>
     <!--首页导航-->
     <nav class="msite_nav">
-      <div class="swiper-container">
-        <div class="swiper-wrapper">
-          <div class="swiper-slide">
-            <a href="javascript:" class="link_to_food">
+      <div class="swiper-container" ref="sc1">
+        <div class="swiper-wrapper" v-if="categorysArr2.length>0">
+          <div class="swiper-slide" v-for="(cs, index) in categorysArr2" :key="index">
+            <div class="link_to_food" v-for="(c, index) in cs" :key="index">
               <div class="food_container">
-                <img src="./images/nav/1.jpg">
+                <img :src="'https://fuss10.elemecdn.com' + c.image_url">
               </div>
-              <span>甜品饮品</span>
-            </a>
-            <a href="javascript:" class="link_to_food">
-              <div class="food_container">
-                <img src="./images/nav/2.jpg">
-              </div>
-              <span>商超便利</span>
-            </a>
-            <a href="javascript:" class="link_to_food">
-              <div class="food_container">
-                <img src="./images/nav/3.jpg">
-              </div>
-              <span>美食</span>
-            </a>
-            <a href="javascript:" class="link_to_food">
-              <div class="food_container">
-                <img src="./images/nav/4.jpg">
-              </div>
-              <span>简餐</span>
-            </a>
-            <a href="javascript:" class="link_to_food">
-              <div class="food_container">
-                <img src="./images/nav/5.jpg">
-              </div>
-              <span>新店特惠</span>
-            </a>
-            <a href="javascript:" class="link_to_food">
-              <div class="food_container">
-                <img src="./images/nav/6.jpg">
-              </div>
-              <span>准时达</span>
-            </a>
-            <a href="javascript:" class="link_to_food">
-              <div class="food_container">
-                <img src="./images/nav/7.jpg">
-              </div>
-              <span>预订早餐</span>
-            </a>
-            <a href="javascript:" class="link_to_food">
-              <div class="food_container">
-                <img src="./images/nav/8.jpg">
-              </div>
-              <span>土豪推荐</span>
-            </a>
+              <span>{{c.title}}</span>
+            </div>
           </div>
-          <div class="swiper-slide">
-            <a href="javascript:" class="link_to_food">
-              <div class="food_container">
-                <img src="./images/nav/9.jpg">
-              </div>
-              <span>甜品饮品</span>
-            </a>
-            <a href="javascript:" class="link_to_food">
-              <div class="food_container">
-                <img src="./images/nav/10.jpg">
-              </div>
-              <span>商超便利</span>
-            </a>
-            <a href="javascript:" class="link_to_food">
-              <div class="food_container">
-                <img src="./images/nav/11.jpg">
-              </div>
-              <span>美食</span>
-            </a>
-            <a href="javascript:" class="link_to_food">
-              <div class="food_container">
-                <img src="./images/nav/12.jpg">
-              </div>
-              <span>简餐</span>
-            </a>
-            <a href="javascript:" class="link_to_food">
-              <div class="food_container">
-                <img src="./images/nav/13.jpg">
-              </div>
-              <span>新店特惠</span>
-            </a>
-            <a href="javascript:" class="link_to_food">
-              <div class="food_container">
-                <img src="./images/nav/14.jpg">
-              </div>
-              <span>准时达</span>
-            </a>
-            <a href="javascript:" class="link_to_food">
-              <div class="food_container">
-                <img src="./images/nav/1.jpg">
-              </div>
-              <span>预订早餐</span>
-            </a>
-            <a href="javascript:" class="link_to_food">
-              <div class="food_container">
-                <img src="./images/nav/2.jpg">
-              </div>
-              <span>土豪推荐</span>
-            </a>
-          </div>
+        </div>
+        <div v-else>
+          <img src="./images/msite_back.svg" alt="">
         </div>
         <!-- Add Pagination -->
         <div class="swiper-pagination"></div>
@@ -125,7 +36,7 @@
         <span class="shop_header_title">附近商家</span>
       </div>
       <div class="shop_container">
-        <ul class="shop_list">
+        <ul class="shop_list" v-if="shops.length>0">
           <li class="shop_li border-1px" v-for="(shop, index) in shops" :key="shop.id">
             <a>
               <div class="shop_left">
@@ -145,7 +56,7 @@
                     <div class="star star-24">
                       <span class="star-item on"></span>
                       <span class="star-item on"></span>
-                      <span class="star-item on"></span>
+                      <span class="star-item on"></span>ccc
                       <span class="star-item half"></span>
                       <span class="star-item off"></span>
                     </div>
@@ -172,6 +83,12 @@
           </li>
           
         </ul>
+        <ul v-else>
+          <li><img src="./images/shop_back.svg" alt="loading"></li>
+          <li><img src="./images/shop_back.svg" alt="loading"></li>
+          <li><img src="./images/shop_back.svg" alt="loading"></li>
+          <li><img src="./images/shop_back.svg" alt="loading"></li>
+        </ul>
       </div>
     </div>
   </section>
@@ -180,6 +97,7 @@
 <script type="text/ecmascript-6">
   import Swiper from 'swiper'
   import 'swiper/css/swiper.css'
+    import chunk from 'lodash/chunk' // 只打包引入的工具函数 ==>打包文件更小
   import {mapState} from 'vuex'
 
 
@@ -187,21 +105,93 @@
 
     computed: {
       ...mapState(['address','categorys','shops']),
+
+      /* 
+      根据一维数组生成二维数组
+      包含所有分类的二维数组
+      内部小数组的长度最大是8
+      */
+      categorysArr () {
+        const { categorys } = this
+        // 二维数组
+        const bigArr = []
+        let smallArr = []
+
+        // 遍历总的一维数组
+        categorys.forEach(c => {
+          // 将小数组放入大数组中(只保存一次)
+          if (smallArr.length===0) {
+            bigArr.push(smallArr)
+          }
+
+          // 将c保存小数组
+          smallArr.push(c)
+
+          // 小数组的长度最大是8  ==> 如果小数组满, 创建一个新的小数组
+          if (smallArr.length===8) {
+            smallArr = []
+          }
+        })
+
+        // 返回二维数组
+        return bigArr
+      },
+      // 使用lodash库实现
+      categorysArr2 () {
+        // return _.chunk(this.categorys, 8)
+        return chunk(this.categorys, 8)
+      }
+
     },
     
-    mounted () {
+    async mounted () {
       //分发异步action，将数据请求到vuex中
-      this.$store.dispatch('getCategorys')
-      this.$store.dispatch('getShops')
+      // this.$store.dispatch('getCategorys')
+      // this.$store.dispatch('getShops')
 
       // swiper对象必须要在列表数据显示之后创建
-      new Swiper ('.swiper-container', {
+      // new Swiper ('.swiper-container', {
+      //   loop: true, // 循环模式选项
+      //   // 如果需要分页器
+      //   pagination: {
+      //     el: '.swiper-pagination',
+      //   }
+      // }) 
+      this.$store.dispatch('getShops')
+      await this.$store.dispatch('getCategorys')  // dispatch返回的promise在数据更新且界面更新之后才成功
+      // swiper对象必须要在列表数据显示之后创建
+      // new Swiper ('.swiper-container', {
+      new Swiper (this.$refs.sc1, {
         loop: true, // 循环模式选项
         // 如果需要分页器
         pagination: {
           el: '.swiper-pagination',
         }
-      }) 
+      })
+    },
+
+    watch: {
+       /* 
+      1. 更新数据
+      2. 立即同步调用监视回调函数
+      3. 异步更新界面
+      */
+
+      /* categorys () { // categorys变化: [] ==> [...]
+
+        // 将回调延迟到下次 DOM 更新循环之后执行。在修改数据之后立即使用它，然后等待 DOM 更新
+        this.$nextTick(() => {
+          // swiper对象必须要在列表数据显示之后创建
+          // new Swiper ('.swiper-container', {
+          new Swiper (this.$refs.sc1, {
+            loop: true, // 循环模式选项
+            // 如果需要分页器
+            pagination: {
+              el: '.swiper-pagination',
+            }
+          }) 
+        })
+      } */
     },
     
   }
