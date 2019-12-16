@@ -28,11 +28,10 @@ export default{
       }
    },
 
-   async getCategorys({commit}){
-    const {longitude, latitude} = state
+   async getCategorys({commit}, callback){
 
     //发异步请求
-    const result = await reqCategorys(longitude, latitude)
+    const result = await reqCategorys()
     //请求成功后，提交给mutations
     if (result.code ===0) {
       const categorys = result.data
@@ -41,11 +40,11 @@ export default{
     }
    },
 
-  async getShops({commit}){
+  async getShops({commit, state}){
     const {longitude, latitude} = state
 
     //发异步请求
-    const result = await reqShops(longitude, latitude)
+    const result = await reqShops({longitude, latitude})
     //请求成功后，提交给mutations
     if (result.code ===0) {
       const shops = result.data
