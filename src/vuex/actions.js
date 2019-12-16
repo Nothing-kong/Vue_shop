@@ -23,7 +23,7 @@ export default{
       const result = await reqAddress(longitude, latitude)
       //请求成功后，提交给mutations
       if (result.code ===0) {
-        const adress = result.data
+        const address = result.data
         commit(RECEIVE_ADDRESS, address)
       }
    },
