@@ -4,16 +4,17 @@
       <div class="login_header">
         <h2 class="login_logo">硅谷外卖</h2>
         <div class="login_header_title">
-          <a href="javascript:;" class="on">短信登录</a>
-          <a href="javascript:;">密码登录</a>
+          <a href="javascript:;" :class="{on:isShowSms}" @click="isShowSms=true">短信登录</a>
+          <a href="javascript:;" :class="{on:!isShowSms}" @click="isShowSms=false">密码登录</a>
         </div>
       </div>
       <div class="login_content">
         <form>
-          <div class="on">
+          <div :class="{on:isShowSms}">
             <section class="login_message">
               <input type="tel" maxlength="11" placeholder="手机号">
-              <button disabled="disabled" class="get_verification">获取验证码</button>
+              <button :disabled="!isRightPhone" class="get_verification" 
+              :class="{right_phone_number:isRightPhone}" @click="sendCode">获取验证码</button>
             </section>
             <section class="login_verification">
               <input type="tel" maxlength="8" placeholder="验证码">
@@ -23,7 +24,7 @@
               <a href="javascript:;">《用户服务协议》</a>
             </section>
           </div>
-          <div>
+          <div :class="{on:!isShowSms}">
             <section>
               <section class="login_message">
                 <input type="tel" maxlength="11" placeholder="手机/邮箱/用户名">
@@ -45,7 +46,7 @@
         </form>
         <a href="javascript:;" class="about_us">关于我们</a>
       </div>
-      <a href="javascript:" class="go_back">
+      <a href="javascript:" class="go_back" @click="$router.replace('/profile')">
         <i class="iconfont icon-jiantou2"></i>
       </a>
     </div>
@@ -54,6 +55,22 @@
 
 <script type="text/ecmascript-6">
   export default {
+    data() {
+      return {
+        isShowSms:false,
+        phone:'',
+      }
+    },
+    computed: {
+      isRightPhone(){
+        return /^1\d{10}$/.test(this.phone)//正则匹配手机号
+      }
+    },
+    methods: {
+      sendCode(){
+        alert('1111')
+      }
+    },
   }
 </script>
 
@@ -184,7 +201,7 @@
           color #999
       .go_back
         position absolute
-        top 5px
+        top 10px
         left 5px
         width 30px
         height 30px
