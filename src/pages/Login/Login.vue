@@ -12,9 +12,9 @@
         <form>
           <div :class="{on:isShowSms}">
             <section class="login_message">
-              <input type="tel" maxlength="11" placeholder="手机号">
+              <input type="tel" maxlength="11" placeholder="手机号" v-model="phone">
               <button :disabled="!isRightPhone" class="get_verification" 
-              :class="{right_phone_number:isRightPhone}" @click="sendCode">获取验证码</button>
+              :class="{right_phone_number:isRightPhone}" @click.prevent="sendCode">获取验证码</button>
             </section>
             <section class="login_verification">
               <input type="tel" maxlength="8" placeholder="验证码">
@@ -30,10 +30,10 @@
                 <input type="tel" maxlength="11" placeholder="手机/邮箱/用户名">
               </section>
               <section class="login_verification">
-                <input type="tel" maxlength="8" placeholder="密码">
-                <div class="switch_button off">
-                  <div class="switch_circle"></div>
-                  <span class="switch_text">...</span>
+                <input :type=" isShowPwd?'text':'password' " maxlength="8" placeholder="密码">
+                <div class="switch_button" :class="isShowPwd ? 'on' : 'off'" @click="isShowPwd=!isShowPwd">
+                  <div class="switch_circle" :class="{right:isShowPwd}"></div>
+                  <span class="switch_text">{{ isShowPwd ? 'abc' : '' }}</span>
                 </div>
               </section>
               <section class="login_message">
@@ -55,15 +55,17 @@
 
 <script type="text/ecmascript-6">
   export default {
+    name:'Login',
     data() {
       return {
         isShowSms:false,
         phone:'',
+        isShowPwd:false,//是否显示密码
       }
     },
     computed: {
       isRightPhone(){
-        return /^1\d{10}$/.test(this.phone)//正则匹配手机号
+        return /^1\d{10}$/.test(this.phone)
       }
     },
     methods: {
@@ -135,6 +137,8 @@
                 color #ccc
                 font-size 14px
                 background transparent
+                &.right_phone_number
+                  color black   
             .login_verification
               position relative
               margin-top 16px
@@ -163,7 +167,6 @@
                 &.on
                   background #02a774
                 >.switch_circle
-                  //transform translateX(27px)
                   position absolute
                   top -1px
                   left -1px
@@ -174,6 +177,8 @@
                   background #fff
                   box-shadow 0 2px 4px 0 rgba(0,0,0,.1)
                   transition transform .3s
+                  &.right
+                    transform translateX(27px)
             .login_hint
               margin-top 12px
               color #999
