@@ -4,11 +4,17 @@ import App from './App.vue'
 import router from './router'
 import store from './vuex/store'
 import Header from './components/Header/Header.vue'
+import Star from './components/Star/Star.vue'
 import './validate'
 import i18n from './i18n'
+import * as API from '@/api'
+
+// 将API对象挂载到Vue的原型对象上
+Vue.prototype.$API = API
 
 //注册全局组件
 Vue.component('Header', Header)
+Vue.component('Star', Star)
 new Vue({
   // components: {
   //   App
