@@ -98,7 +98,12 @@
   export default {
 
     computed: {
-      ...mapState(['address','categorys','shops']),
+      ...mapState({
+        address: state => state.msite.address,
+        categorys: state => state.msite.categorys,
+        shops: state => state.msite.shops,
+        }
+      ),
 
       /* 
       根据一维数组生成二维数组
