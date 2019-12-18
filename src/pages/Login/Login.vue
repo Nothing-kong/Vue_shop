@@ -115,7 +115,7 @@
         }
       },
 
-      async login () {
+      async login ( ) {
         // 进行前台表单验证
         let names
         if (this.isShowSms) {
