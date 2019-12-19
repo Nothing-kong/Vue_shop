@@ -4,5 +4,7 @@
 */
 
 export default {
-  
+  xxx (state){
+    
+  }
 }

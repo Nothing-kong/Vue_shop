@@ -11,7 +11,7 @@ import Star from './components/Star/Star.vue'
 import './validate'
 import i18n from './i18n'
 import * as API from '@/api'
-// import './mock/mock-server'
+import './mock/mock-server'
 // import loading from '@/common/images/loading.gif'
 
 

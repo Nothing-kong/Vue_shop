@@ -35,3 +35,9 @@ export const reqSmsLogin = ({phone, code}) => ajax.post('/login_sms', {phone, co
 
 // 7. 自动登陆
 export const reqAutoLogin = () => ajax.get('/auto_login')
+//获取goods
+export const reqGoods = () => ajax.get('/goods')
+//获取ratings
+export const reqRatings = () => ajax.get('/ratings')
+//获取info
+export const reqInfo = () => ajax.get('/info')

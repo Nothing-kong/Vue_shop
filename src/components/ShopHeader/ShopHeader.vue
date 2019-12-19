@@ -1,7 +1,7 @@
 <template>
   <div class="shop-header">
     <nav class="shop-nav"
-         style="background-image: url('https://fuss10.elemecdn.com/f/5c/ead54394c3de198d3e6d3e9111bbfpng.png');">
+         :style="{backgroundImage: `url(${info.bgImg})`}">
       <a class="back" @click="$router.replace('/msite')">
         <i class="iconfont icon-arrow_left"/>
       </a>
@@ -117,7 +117,14 @@
 </template>
 
 <script type="text/ecmascript-6">
+  import {mapState} from 'vuex'
+
   export default {
+    computed: {
+      ...mapState({
+        info:state => state.shop.info
+      })
+    },
   }
 </script>
 

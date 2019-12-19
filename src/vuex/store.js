@@ -10,6 +10,7 @@ import mutations from './mutations'
 import getters from './getters'
 import msite from './modules/msite'
 import user from './modules/user'
+import shop from './modules/shop'
 
 Vue.use(Vuex)
 
@@ -19,6 +20,7 @@ export default new Vuex.Store({
   getters,
   modules:{
     msite,
-    user
+    user,
+    shop
   }
 })
