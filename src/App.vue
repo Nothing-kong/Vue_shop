@@ -12,7 +12,7 @@
     async mounted () {
       // 通知action异步获取address并保存到state
       this.$store.dispatch('getAddress')
-      // this.$store.dispatch('autoLogin')
+      this.$store.dispatch('autoLogin')
     },
 
     components: {
