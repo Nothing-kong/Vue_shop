@@ -28,9 +28,17 @@
         <p class="shop-notice">{{info.bulletin}}</p>
       </div>
     </div>
-    <div class="shop-header-discounts" v-if="info.supports">
+
+    <!-- 
+      初始显示异常: Cannot read property 'xxx' of undefined"
+      原因: 初始数据是一个空对象, 但表达式: a.b.c
+      解决:
+        正确: v-if  在没有数据时不解析/编译这块模板
+        错误: v-show 在没有数据时也会解析/编译这块模板  ==> 导致报错
+    -->
+    <div class="shop-header-discounts" v-if="info.supports" @click="isShowSupports=true">
       <div class="discounts-left">
-        <div class="activity activity-green">
+        <div class="activity" :class="supportClasses[info.supports[0].type]"> 
           <span class="content-tag">
             <span class="mini-tag">{{info.supports[0].name}}</span>
           </span>
@@ -41,60 +49,61 @@
         {{info.supports.length}}个优惠
       </div>
     </div>
-    <div class="shop-brief-modal" v-show="isShowBulletin">
-      <div class="brief-modal-content">
-        <h2 class="content-title">
-          <span class="content-tag">
-            <span class="mini-tag">品牌</span>
-          </span>
-          <span class="content-name">{{info.name}}</span>
-        </h2>
-        <ul class="brief-modal-msg">
-          <li>
-            <h3>{{info.score}}</h3>
-            <p>评分</p>
-          </li>
-          <li>
-            <h3>{{info.sellCount}}单</h3>
-            <p>月售</p>
-          </li>
-          <li>
-            <h3>{{info.description}}</h3>
-            <p>约{{info.deliveryTime}}分钟</p>
-          </li>
-          <li>
-            <h3>{{info.deliveryPrice}}元</h3>
-            <p>配送费用</p>
-          </li>
-          <li>
-            <h3>{{info.distance}}</h3>
-            <p>距离</p>
-          </li>
-        </ul>
-        <h3 class="brief-modal-title">
-          <span>公告</span></h3>
-          <div class="brief-modal-notice">
-            {{info.bulletin}}
+    <transition name="fade">  <!-- fade-enter-active fade-leave-active fade-enter fade-leave-to -->
+      <div class="shop-brief-modal" v-show="isShowBulletin">
+        <div class="brief-modal-content">
+          <h2 class="content-title">
+            <span class="content-tag">
+              <span class="mini-tag">品牌</span>
+            </span>
+            <span class="content-name">{{info.name}}</span>
+          </h2>
+          <ul class="brief-modal-msg">
+            <li>
+              <h3>{{info.score}}</h3>
+              <p>评分</p>
+            </li>
+            <li>
+              <h3>{{info.sellCount}}单</h3>
+              <p>月售</p>
+            </li>
+            <li>
+              <h3>硅谷专送</h3>
+              <p>约{{info.deliveryTime}}分钟</p>
+            </li>
+            <li>
+              <h3>{{info.deliveryPrice}}元</h3>
+              <p>配送费用</p>
+            </li>
+            <li>
+              <h3>{{info.distance}}</h3>
+              <p>距离</p>
+            </li>
+          </ul>
+          <h3 class="brief-modal-title">
+            <span>公告</span></h3>
+            <div class="brief-modal-notice">{{info.bulletin}}</div>
+          <div class="mask-footer" @click="isShowBulletin = false">
+            <span class="iconfont icon-close"></span>
           </div>
-        <div class="mask-footer" @click="isShowBulletin=false">
-          <span class="iconfont icon-close"></span>
         </div>
+        <div class="brief-modal-cover" @click="isShowBulletin = false"></div>
       </div>
-      <div class="brief-modal-cover" @click="isShowBulletin = false"></div>
-    </div>
-    <div class="activity-sheet" style="display: none;">
+    </transition>
+    
+
+    <div class="activity-sheet" v-show="isShowSupports">
       <div class="activity-sheet-content">
         <h2 class="activity-sheet-title">
         优惠活动</h2>
         <ul class="list">
-          <li class="activity-item" :class="supportClasses[support.type]"
+          <li class="activity-item" :class="supportClasses[support.type]" 
           v-for="(support, index) in info.supports" :key="index">
             <span class="content-tag">
               <span class="mini-tag">{{support.name}}</span>
             </span>
-            <span class="activity-content">{{support.conent}}</span>
+            <span class="activity-content">{{support.content}}</span>
           </li>
-         
         </ul>
         <div class="activity-sheet-close" @click="isShowSupports=false">
           <span class="iconfont icon-close"></span>
@@ -103,29 +112,29 @@
       <div class="activity-sheet-cover" @click="isShowSupports=false"></div>
     </div>
   </div>
-
 </template>
+
 
 <script type="text/ecmascript-6">
   import {mapState} from 'vuex'
-
   export default {
-    data() {
+    data () {
       return {
-        supportClasses:['activity-green','activity-red','activity-orange'],
-        isShowBulletin:false,
-        isShowSupports:false
+        supportClasses: ['activity-green', 'activity-red', 'activity-orange'],
+        isShowBulletin: false,
+        isShowSupports: false
       }
     },
+
     computed: {
       ...mapState({
-        info:state => state.shop.info || {}
+        info: state => state.shop.info
       })
-    },
+    }
   }
 </script>
 
-<style scoped lang="stylus" rel="stylesheet/stylus">
+<style lang="stylus" rel="stylesheet/stylus" scoped>
   @import "../../common/stylus/mixins.styl"
 
   .shop-header
@@ -315,6 +324,10 @@
       z-index 52
       flex-direction column
       color #333
+      &.fade-enter-active, &.fade-leave-active 
+        transition opacity .5s
+      &.fade-enter, &.fade-leave-to
+        opacity 0
       .brief-modal-cover
         position absolute
         width 100%
@@ -494,5 +507,5 @@
         top 0
         left 0
         background-color rgba(0, 0, 0, .5)
- 
+
 </style>
