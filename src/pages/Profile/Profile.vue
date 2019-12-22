@@ -1,7 +1,7 @@
 <template>
   <section class="profile">
     <Header title="个 人"/>
-    <section class="profile-number" @click="$router.push(user._id ? 'userinfo' : '/login')">
+    <section class="profile-number" @click="$router.push(user._id ? '/userinfo' : '/login')">
       <a href="javascript:" class="profile-link">
         <div class="profile_image">
           <i class="iconfont icon-person"></i>
@@ -91,39 +91,48 @@
     <section class="profile_my_order border-1px" v-show="user._id">
       <mt-button style="width: 100%" type="danger" @click="logout">退出登陆</mt-button>
     </section>
+
+    <section class="profile_my_order border-1px">
+      <router-link to="/a">AAA</router-link>
+      &nbsp;&nbsp;
+      <router-link to="/b">BBB</router-link>
+      &nbsp;&nbsp;
+      <router-link to="/login">去登陆</router-link>
+    </section>
   </section>
 </template>
 
 <script type="text/ecmascript-6">
-
   import {mapState} from 'vuex'
   import {MessageBox} from 'mint-ui'
-
   export default {
     computed: {
       ...mapState({
         user: state => state.user.user
       })
     },
+
     methods: {
-      logout(){
-        MessageBox.confirm('确定执行此操作？').then(
-          () => {
+      logout () {
+        MessageBox.confirm('确定执行此操作?').then(
+          () => { // 点击确认
             this.$store.dispatch('logout')
           },
-          () => {
+          () => { // 点击取消
             console.log('点击了取消')
           }
         )
       }
-    },
+    }
   }
 </script>
 
 <style scoped lang="stylus" rel="stylesheet/stylus">
-@import '../../common/stylus/mixins.styl'
+  @import '../../common/stylus/mixins.styl'
+
   .profile //我的
     width 100%
+    overflow hidden
     .profile-number
       margin-top 45.5px
       .profile-link
@@ -162,7 +171,6 @@
                 font-size 30px
                 vertical-align text-top
             .icon-mobile-number
-              margin-left 5px
               font-size 14px
               color #fff
         .arrow
@@ -253,5 +261,4 @@
             .icon-jiantou1
               color #bbb
               font-size 10px
- 
 </style>

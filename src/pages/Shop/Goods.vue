@@ -2,27 +2,26 @@
   <div>
     <div class="goods">
       <div class="menu-wrapper" ref="left">
-        <ul ref="leftUI">
-          <li class="menu-item" v-for="(good, index) in goods" :key="good.name"
-          :class="{current: index===currentIndex}" @click="clickItem(index)">
+        <ul ref="leftUl">
+          <!-- current -->
+          <li class="menu-item" v-for="(good, index) in goods" :key="good.name" 
+            :class="{current: index===currentIndex}" @click="clickItem(index)">
             <span class="text bottom-border-1px">
-            <img class="icon" :src="good.icon" v-if="good.icon">
+              <img class="icon" :src="good.icon" v-if="good.icon">
               {{good.name}}
             </span>
           </li>
-          
         </ul>
       </div>
-      <div class="foods-wrapper" ref = "right">
-        <ul ref="rightUI">
+      <div class="foods-wrapper" ref="right">
+        <ul ref="rightUl">
           <li class="food-list-hook" v-for="(good, index) in goods" :key="index">
             <h1 class="title">{{good.name}}</h1>
             <ul>
-              <li class="food-item bottom-border-1px" v-for="(food, index) in good.foods"
-               :key="index" @click="showFood(food)">
+              <li class="food-item bottom-border-1px" v-for="(food, index) in good.foods" 
+                :key="index" @click="showFood(food)">
                 <div class="icon">
-                  <img width="57" height="57"
-                      :src="food.icon">
+                  <img width="57" height="57" :src="food.icon">
                 </div>
                 <div class="content">
                   <h2 class="name">{{food.name}}</h2>
@@ -35,7 +34,7 @@
                     <span class="old" v-if="food.oldPrice">￥{{food.oldPrice}}</span>
                   </div>
                   <div class="cartcontrol-wrapper">
-                    CartControl组件
+                    <CartControl :food="food"/>
                   </div>
                 </div>
               </li>
@@ -45,6 +44,7 @@
       </div>
       <ShopCart/>
     </div>
+    <!-- 组件标签对象就是组件对象 -->
     <Food :food="food" ref="food"/>
   </div>
 </template>
@@ -181,7 +181,7 @@
   }
 </script>
 
-<style lang="stylus" rel="stylesheet/stylus">
+<style scoped lang="stylus" rel="stylesheet/stylus">
   @import "../../common/stylus/mixins.styl"
 
   .goods
@@ -193,7 +193,7 @@
     background: #fff;
     overflow: hidden
     .menu-wrapper
-      flex: 0 0 80px
+      flex: 0 0 auto
       width: 80px
       background: #f3f5f7
       .menu-item
@@ -280,5 +280,3 @@
             right: 0
             bottom: 12px
 </style>
-
-

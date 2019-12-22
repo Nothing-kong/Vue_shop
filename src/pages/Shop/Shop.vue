@@ -3,13 +3,13 @@
     <ShopHeader/>
     <div class="tab">
       <div class="tab-item">
-        <router-link to="/shop/goods" replace>点餐</router-link>
+        <router-link :to="`/shop/${id}/goods`" replace>点餐</router-link>
       </div>
       <div class="tab-item">
-        <router-link to="/shop/ratings" replace>评价</router-link>
+        <router-link :to="`/shop/${id}/ratings`" replace>评价</router-link>
       </div>
       <div class="tab-item">
-        <router-link to="/shop/info" replace>商家</router-link>
+        <router-link :to="`/shop/${id}/info`" replace>商家</router-link>
       </div>
     </div>
     <router-view></router-view>
@@ -17,14 +17,53 @@
 </template>
 
 <script type="text/ecmascript-6">
-import ShopHeader from '@/components/ShopHeader/ShopHeader.vue'
+  import {mapState} from 'vuex'
+  import {saveCartFoods} from '@/utils'
+  import ShopHeader from '@/components/ShopHeader/ShopHeader'
   export default {
-    mounted() {
-      this.$store.dispatch('getShopRatings')
-      this.$store.dispatch('getShopGoods')
-      this.$store.dispatch('getShopInfo')
+
+    name: 'Shop',
+
+    props: ['id'],
+
+    mounted () {
+      // this.$store.dispatch('getShopInfo')
+      // this.$store.dispatch('getShopGoods')
+      // this.$store.dispatch('getShopRatings')
+
+      // 得到当前请求的商家ID
+      // const id = this.$route.params.id
+      const id = this.id
+      // console.log('id', id)
+
+      // 分发action请求商家数据
+      this.$store.dispatch('getShop', id)
+
+      // 给窗口绑定一个卸载的监听(刷新)
+      // window.onunload = () => {}
+      window.addEventListener('unload', () => {
+        const {shop:{id}, cartFoods } = this.shop  // 多层解构
+        // 将当前商家的购物车数据保存
+        saveCartFoods(id, cartFoods)
+      })
     },
-    components:{
+
+    computed: {
+      ...mapState({
+        shop: state => state.shop   // {shop: {}, cartFoods: []}
+      })
+    },
+
+    // 在退出当前商家界面时调用
+    beforeDestroy () { //在刷新界面时不会执行
+      // sessionStorage.setItem('beforeDestroy_key', 2)
+      const {shop:{id}, cartFoods } = this.shop  // 多层解构
+
+      // 将当前商家的购物车数据保存
+      saveCartFoods(id, cartFoods)
+    },
+
+    components: {
       ShopHeader
     }
   }
@@ -57,5 +96,4 @@ import ShopHeader from '@/components/ShopHeader/ShopHeader.vue'
             height 2px
             transform translateX(-50%)
             background #02a774
- 
 </style>

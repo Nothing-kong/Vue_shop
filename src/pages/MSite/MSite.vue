@@ -2,17 +2,17 @@
   <section class="msite">
     <!--首页头部-->
     <Header :title="address.name || '定位中...'">
-        <span class="header_search" slot="left">
-          <i class="iconfont icon-sousuo"></i>
-        </span>
       <span class="header_login" slot="right">
-          <span class="header_login_text">登录|注册</span>
-        </span>
+        <span class="header_login_text">登录|注册</span>
+      </span>
+      <span class="header_search" slot="left">
+        <i class="iconfont icon-sousuo"></i>
+      </span> 
     </Header>
     <!--首页导航-->
     <nav class="msite_nav">
-      <div class="swiper-container" ref="sc1">
-        <div class="swiper-wrapper" v-if="categorysArr2.length>0">
+      <div ref="sc1" class="swiper-container">
+        <div class="swiper-wrapper">
           <div class="swiper-slide" v-for="(cs, index) in categorysArr2" :key="index">
             <div class="link_to_food" v-for="(c, index) in cs" :key="index">
               <div class="food_container">
@@ -21,9 +21,6 @@
               <span>{{c.title}}</span>
             </div>
           </div>
-        </div>
-        <div v-else>
-          <img src="./images/msite_back.svg" alt="">
         </div>
         <!-- Add Pagination -->
         <div class="swiper-pagination"></div>
@@ -36,19 +33,30 @@
         <span class="shop_header_title">附近商家</span>
       </div>
       <div class="shop_container">
-        <ul class="shop_list" v-if="shops.length>0"><!--商家列表-->
-          <li class="shop_li border-1px" v-for="shop in shops" :key="shop.id" @click="$router.push('/shop')">
+        <ul class="shop_list" v-if="shops.length>0">
+          <li class="shop_li border-1px" v-for="shop in shops" :key="shop.id" 
+            @click="$router.push(`/shop/${shop.id}`)"
+          >
+            
+            <!-- 
+              @click="$router.push(`/shop/${shop.id}`)"
+              @click="$router.push({
+                name: 'shop',
+                params: {
+                  id: shop.id
+                }
+              })"
+            -->
+            
             <a>
               <div class="shop_left">
                 <img class="shop_img" :src="'https://fuss10.elemecdn.com' + shop.image_path">
               </div>
               <div class="shop_right">
                 <section class="shop_detail_header">
-                  <h4 class="shop_title ellipsis">"{{shop.name}}</h4>
+                  <h4 class="shop_title ellipsis">{{shop.name}}</h4>
                   <ul class="shop_detail_ul">
-                    <li class="supports" v-for="(support, index) in shop.supports" :key="index">
-                      {{support.icon_name}}
-                    </li>
+                    <li class="supports" v-for="(support, index) in shop.supports" :key="index">{{support.icon_name}}</li>
                   </ul>
                 </section>
                 <section class="shop_rating_order">
@@ -75,13 +83,20 @@
               </div>
             </a>
           </li>
-          
         </ul>
         <ul v-else>
-          <li><img src="./images/shop_back.svg" alt="loading"></li>
-          <li><img src="./images/shop_back.svg" alt="loading"></li>
-          <li><img src="./images/shop_back.svg" alt="loading"></li>
-          <li><img src="./images/shop_back.svg" alt="loading"></li>
+          <li>
+            <img src="./images/shop_back.svg" alt="loading">
+          </li>
+          <li>
+            <img src="./images/shop_back.svg" alt="loading">
+          </li>
+          <li>
+            <img src="./images/shop_back.svg" alt="loading">
+          </li>
+          <li>
+            <img src="./images/shop_back.svg" alt="loading">
+          </li>
         </ul>
       </div>
     </div>
@@ -91,19 +106,22 @@
 <script type="text/ecmascript-6">
   import Swiper from 'swiper'
   import 'swiper/css/swiper.css'
-    import chunk from 'lodash/chunk' // 只打包引入的工具函数 ==>打包文件更小
+  // import _ from 'lodash'
+  import chunk from 'lodash/chunk' // 只打包引入的工具函数 ==>打包文件更小
+  // import {chunk} from 'lodash'
   import {mapState} from 'vuex'
-
 
   export default {
 
     computed: {
       ...mapState({
-        address: state => state.msite.address,
-        categorys: state => state.msite.categorys,
-        shops: state => state.msite.shops,
-        }
-      ),
+        // address: 'address',  // 总state中没有address   
+        // categorys: 'categorys', 
+        // shops: 'shops'
+        address: state => state.msite.address, // state是总状态, 函数的返回就是计算属性值
+        categorys: state => state.msite.categorys, 
+        shops: state => state.msite.shops, 
+      }),
 
       /* 
       根据一维数组生成二维数组
@@ -142,20 +160,23 @@
       }
 
     },
-    
-    async mounted () {
-      //分发异步action，将数据请求到vuex中
-      // this.$store.dispatch('getCategorys')
-      // this.$store.dispatch('getShops')
 
-      // swiper对象必须要在列表数据显示之后创建
-      // new Swiper ('.swiper-container', {
-      //   loop: true, // 循环模式选项
-      //   // 如果需要分页器
-      //   pagination: {
-      //     el: '.swiper-pagination',
-      //   }
-      // }) 
+    async mounted () {
+      // 分发异步action, 将数据从后台请求到vuex中
+      /* this.$store.dispatch('getCategorys', () => {// 数据已经变了
+        this.$nextTick(() => {
+          // swiper对象必须要在列表数据显示之后创建
+          // new Swiper ('.swiper-container', {
+          new Swiper (this.$refs.sc1, {
+            loop: true, // 循环模式选项
+            // 如果需要分页器
+            pagination: {
+              el: '.swiper-pagination',
+            }
+          }) 
+        })
+      }) */
+
       this.$store.dispatch('getShops')
       await this.$store.dispatch('getCategorys')  // dispatch返回的promise在数据更新且界面更新之后才成功
       // swiper对象必须要在列表数据显示之后创建
@@ -169,13 +190,18 @@
       })
     },
 
+    /* 
+    解决swiper轮播不正常的问题?
+    方式1: watch + nextTick()
+    方式2: callback + nextTick()
+    方式3: 利用dipatch()返回的promise
+    */
     watch: {
-       /* 
+      /* 
       1. 更新数据
       2. 立即同步调用监视回调函数
       3. 异步更新界面
       */
-
       /* categorys () { // categorys变化: [] ==> [...]
 
         // 将回调延迟到下次 DOM 更新循环之后执行。在修改数据之后立即使用它，然后等待 DOM 更新
@@ -191,14 +217,14 @@
           }) 
         })
       } */
-    },
-    
+    }
   }
 </script>
 
 <style scoped lang="stylus" rel="stylesheet/stylus">
-@import '../../common/stylus/mixins.styl'
- .msite  //首页
+  @import '../../common/stylus/mixins.styl'
+
+  .msite  //首页
     width 100%
     .msite_nav
       bottom-border-1px(#e4e4e4)
@@ -311,54 +337,6 @@
                   .shop_rating_order_left
                     float left
                     color #ff9a0d
-                    .star //2x图 3x图
-                      float left
-                      font-size 0
-                      .star-item
-                        display inline-block
-                        background-repeat no-repeat
-                      &.star-48
-                        .star-item
-                          width 20px
-                          height 20px
-                          margin-right 22px
-                          background-size 20px 20px
-                          &:last-child
-                            margin-right: 0
-                          &.on
-                            bg-image('./images/stars/star48_on')
-                          &.half
-                            bg-image('./images/stars/star48_half')
-                          &.off
-                            bg-image('./images/stars/star48_off')
-                      &.star-36
-                        .star-item
-                          width 15px
-                          height 15px
-                          margin-right 6px
-                          background-size 15px 15px
-                          &:last-child
-                            margin-right 0
-                          &.on
-                            bg-image('./images/stars/star36_on')
-                          &.half
-                            bg-image('./images/stars/star36_half')
-                          &.off
-                            bg-image('./images/stars/star36_off')
-                      &.star-24
-                        .star-item
-                          width 10px
-                          height 10px
-                          margin-right 3px
-                          background-size 10px 10px
-                          &:last-child
-                            margin-right 0
-                          &.on
-                            bg-image('./images/stars/star24_on')
-                          &.half
-                            bg-image('./images/stars/star24_half')
-                          &.off
-                            bg-image('./images/stars/star24_off')
                     .rating_section
                       float left
                       font-size 10px
@@ -398,4 +376,5 @@
                     color #666
                   .segmentation
                     color #ccc
+        
 </style>

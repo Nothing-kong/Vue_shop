@@ -768,11 +768,6 @@
     cssnano-preset-default "^4.0.0"
     postcss "^7.0.0"
 
-"@kazupon/vue-i18n-loader@^0.3.0":
-  version "0.3.0"
-  resolved "https://registry.npm.taobao.org/@kazupon/vue-i18n-loader/download/@kazupon/vue-i18n-loader-0.3.0.tgz#e068de2d75d891275814ae28ad1fcaf1b537694f"
-  integrity sha1-4GjeLXXYkSdYFK4orR/K8bU3aU8=
-
 "@mrmlnc/readdir-enhanced@^2.2.1":
   version "2.2.1"
   resolved "https://registry.npm.taobao.org/@mrmlnc/readdir-enhanced/download/@mrmlnc/readdir-enhanced-2.2.1.tgz#524af240d1a360527b730475ecfa1344aa540dde"
@@ -1614,7 +1609,7 @@ bcrypt-pbkdf@^1.0.0:
   dependencies:
     tweetnacl "^0.14.3"
 
-better-scroll@^1.15.2:
+better-scroll@1.15.2:
   version "1.15.2"
   resolved "https://registry.npm.taobao.org/better-scroll/download/better-scroll-1.15.2.tgz#65ffc6058b8b4ff337b8dfad4bcb334d7699ceb6"
   integrity sha1-Zf/GBYuLT/M3uN+tS8szTXaZzrY=
@@ -2239,7 +2234,7 @@ combined-stream@^1.0.6, combined-stream@~1.0.6:
 
 commander@*:
   version "4.0.1"
-  resolved "https://registry.npm.taobao.org/commander/download/commander-4.0.1.tgz#b67622721785993182e807f4883633e6401ba53c"
+  resolved "https://registry.npm.taobao.org/commander/download/commander-4.0.1.tgz?cache=0&sync_timestamp=1573464045808&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fcommander%2Fdownload%2Fcommander-4.0.1.tgz#b67622721785993182e807f4883633e6401ba53c"
   integrity sha1-tnYicheFmTGC6Af0iDYz5kAbpTw=
 
 commander@2.17.x:
@@ -2408,7 +2403,7 @@ core-js-compat@^3.4.3, core-js-compat@^3.4.7:
 
 core-js@^2.4.0:
   version "2.6.11"
-  resolved "https://registry.npm.taobao.org/core-js/download/core-js-2.6.11.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fcore-js%2Fdownload%2Fcore-js-2.6.11.tgz#38831469f9922bded8ee21c9dc46985e0399308c"
+  resolved "https://registry.npm.taobao.org/core-js/download/core-js-2.6.11.tgz#38831469f9922bded8ee21c9dc46985e0399308c"
   integrity sha1-OIMUafmSK97Y7iHJ3EaYXgOZMIw=
 
 core-js@^3.4.3:
@@ -3008,7 +3003,7 @@ dotenv-expand@^5.1.0:
 
 dotenv@^6.0.0:
   version "6.2.0"
-  resolved "https://registry.npm.taobao.org/dotenv/download/dotenv-6.2.0.tgz#941c0410535d942c8becf28d3f357dbd9d476064"
+  resolved "https://registry.npm.taobao.org/dotenv/download/dotenv-6.2.0.tgz?cache=0&sync_timestamp=1571190875964&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fdotenv%2Fdownload%2Fdotenv-6.2.0.tgz#941c0410535d942c8becf28d3f357dbd9d476064"
   integrity sha1-lBwEEFNdlCyL7PKNPzV9vZ1HYGQ=
 
 dotenv@^8.2.0:
@@ -3642,7 +3637,7 @@ flat-cache@^2.0.1:
 
 flat@^4.0.0:
   version "4.1.0"
-  resolved "https://registry.npm.taobao.org/flat/download/flat-4.1.0.tgz?cache=0&sync_timestamp=1571722225811&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fflat%2Fdownload%2Fflat-4.1.0.tgz#090bec8b05e39cba309747f1d588f04dbaf98db2"
+  resolved "https://registry.npm.taobao.org/flat/download/flat-4.1.0.tgz?cache=0&sync_timestamp=1571721594048&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fflat%2Fdownload%2Fflat-4.1.0.tgz#090bec8b05e39cba309747f1d588f04dbaf98db2"
   integrity sha1-CQvsiwXjnLowl0fx1YjwTbr5jbI=
   dependencies:
     is-buffer "~2.0.3"
@@ -5341,6 +5336,11 @@ mockjs@^1.1.0:
   integrity sha1-5qDDeOkZBtuv8gkRzAJzs8fXWwY=
   dependencies:
     commander "*"
+
+moment@^2.24.0:
+  version "2.24.0"
+  resolved "https://registry.npm.taobao.org/moment/download/moment-2.24.0.tgz#0d055d53f5052aa653c9f6eb68bb5d12bf5c2b5b"
+  integrity sha1-DQVdU/UFKqZTyfbraLtdEr9cK1s=
 
 move-concurrently@^1.0.1:
   version "1.0.1"
@@ -8242,7 +8242,7 @@ vue-i18n-extract@^0.4.13:
 
 vue-i18n@^8.0.0:
   version "8.15.1"
-  resolved "https://registry.npm.taobao.org/vue-i18n/download/vue-i18n-8.15.1.tgz?cache=0&sync_timestamp=1574846332347&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fvue-i18n%2Fdownload%2Fvue-i18n-8.15.1.tgz#90097a08a1e932f645c6b9c404c780d24f6d6224"
+  resolved "https://registry.npm.taobao.org/vue-i18n/download/vue-i18n-8.15.1.tgz#90097a08a1e932f645c6b9c404c780d24f6d6224"
   integrity sha1-kAl6CKHpMvZFxrnEBMeA0k9tYiQ=
 
 vue-lazyload@^1.0.1:
@@ -8289,7 +8289,7 @@ vue-template-es2015-compiler@^1.9.0:
 
 vue@^2.5.16:
   version "2.6.11"
-  resolved "https://registry.npm.taobao.org/vue/download/vue-2.6.11.tgz#76594d877d4b12234406e84e35275c6d514125c5"
+  resolved "https://registry.npm.taobao.org/vue/download/vue-2.6.11.tgz?cache=0&sync_timestamp=1576267395423&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fvue%2Fdownload%2Fvue-2.6.11.tgz#76594d877d4b12234406e84e35275c6d514125c5"
   integrity sha1-dllNh31LEiNEBuhONSdcbVFBJcU=
 
 vue@^2.6.10:
@@ -8591,7 +8591,7 @@ yargs-parser@^11.1.1:
 
 yargs-parser@^13.1.1:
   version "13.1.1"
-  resolved "https://registry.npm.taobao.org/yargs-parser/download/yargs-parser-13.1.1.tgz#d26058532aa06d365fe091f6a1fc06b2f7e5eca0"
+  resolved "https://registry.npm.taobao.org/yargs-parser/download/yargs-parser-13.1.1.tgz?cache=0&sync_timestamp=1572648119212&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fyargs-parser%2Fdownload%2Fyargs-parser-13.1.1.tgz#d26058532aa06d365fe091f6a1fc06b2f7e5eca0"
   integrity sha1-0mBYUyqgbTZf4JH2ofwGsvfl7KA=
   dependencies:
     camelcase "^5.0.0"
@@ -8625,7 +8625,7 @@ yargs@12.0.5:
 
 yargs@^13.2.2:
   version "13.3.0"
-  resolved "https://registry.npm.taobao.org/yargs/download/yargs-13.3.0.tgz?cache=0&sync_timestamp=1574137866151&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fyargs%2Fdownload%2Fyargs-13.3.0.tgz#4c657a55e07e5f2cf947f8a366567c04a0dedc83"
+  resolved "https://registry.npm.taobao.org/yargs/download/yargs-13.3.0.tgz#4c657a55e07e5f2cf947f8a366567c04a0dedc83"
   integrity sha1-TGV6VeB+Xyz5R/ijZlZ8BKDe3IM=
   dependencies:
     cliui "^5.0.0"

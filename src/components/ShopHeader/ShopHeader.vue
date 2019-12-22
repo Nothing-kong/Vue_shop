@@ -97,8 +97,7 @@
         <h2 class="activity-sheet-title">
         优惠活动</h2>
         <ul class="list">
-          <li class="activity-item" :class="supportClasses[support.type]" 
-          v-for="(support, index) in info.supports" :key="index">
+          <li class="activity-item" :class="supportClasses[support.type]" v-for="(support, index) in info.supports" :key="index">
             <span class="content-tag">
               <span class="mini-tag">{{support.name}}</span>
             </span>
@@ -128,7 +127,7 @@
 
     computed: {
       ...mapState({
-        info: state => state.shop.info
+        info: state => state.shop.shop.info || {}
       })
     }
   }

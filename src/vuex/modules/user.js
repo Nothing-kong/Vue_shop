@@ -12,8 +12,7 @@ import {
   reqAutoLogin,
 } from '@/api'
 
-
-export default {
+export default  {
   state: { 
     user: {}, // 用户信息对象
     token: localStorage.getItem('token_key') || '', // 当前用户登陆的标记

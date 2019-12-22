@@ -33,16 +33,19 @@
 
     methods: {
       goto (path) {
-        // if (path !== this.$route.path) {
+        // 方案1: 如果点击当前项, 没有任务效果
+        // if (path!==this.$route.path) {
         //   // 编程式路由跳转
         //   this.$router.replace(path)
         // }
-          if (path !== this.$route.path) {
-            //编程式路由导航
-            this.$router.replace(path)
-          }else{
-            window.location = path //发送一般http请求
-          }
+        
+        // 方案2: 如果点击当前项, 刷新界面
+        if (path!==this.$route.path) {
+          // 编程式路由跳转
+          this.$router.replace(path)
+        } else {
+          window.location = path  // 发送一般的http请求 ==> 整个界面会刷新显示
+        }
       }
     }
   }
@@ -58,7 +61,7 @@
     bottom 0
     height 50px
     width 100%
-    background-color white
+    background #fff
     .guide-item
       display flex
       flex-direction column
@@ -67,9 +70,8 @@
       &.on
         color $green
       span
-        margin-top 6px
+        margin-top 3px
         font-size 12px
         i
           font-size 22px
-          
 </style>
